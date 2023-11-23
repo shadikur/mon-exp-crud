@@ -5,6 +5,6 @@ dotenv.config({ path: path.join((process.cwd(), '.env')) });
 console.log(process.cwd());
 
 export default {
-  PORT: process.env.PORT,
-  DB_CONN: process.env.MONGO_CONN,
+  server_port: process.env.PORT,
+  db_connect: process.env.MONGO_CONN,
 };
