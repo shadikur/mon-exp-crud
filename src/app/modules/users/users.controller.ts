@@ -316,7 +316,7 @@ const getAllOrders = async (req: Request, res: Response) => {
 // Get the total price of all orders for a user
 const getTotalOrderAmount = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;
+    const userId = parseInt(req.params.userId);
 
     const result = await UserModel.aggregate([
       { $match: { userId } },
@@ -330,6 +330,8 @@ const getTotalOrderAmount = async (req: Request, res: Response) => {
         },
       },
     ]);
+
+    //console.log(result);
 
     if (result.length === 0) {
       return res.status(404).json({
