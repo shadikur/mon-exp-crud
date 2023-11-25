@@ -17,6 +17,7 @@ This is a simple CRUD application that allows the user to create, read, update, 
 - Mongoose
 - Heroku
 - MongoDB Atlas
+- Bcrypt
 
 ## Installation
 

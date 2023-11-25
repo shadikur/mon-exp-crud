@@ -13,7 +13,7 @@ app.use('/api', UserRoutes);
 // Default route
 app.get('/', (req: Request, res: Response) => {
   res.json({
-    message: 'Welcome to User Management API',
+    message: 'API server is up and running!',
   });
 });
 

@@ -7,4 +7,5 @@ console.log(process.cwd());
 export default {
   server_port: process.env.PORT,
   db_connect: process.env.MONGO_CONN,
+  brcypt_salt: process.env.BCRYPT_SALT || 10,
 };
