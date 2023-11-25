@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { UserSchema } from './users.zod';
+import { OrderSchema, UserSchema } from './users.zod';
 import { UserModel } from './users.model';
 
 // Create a new user
@@ -223,10 +223,153 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
+//  Create a new order for a user
+const createOrder = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+
+    // Validate the request body
+    const parseResult = OrderSchema.safeParse(req.body);
+    if (!parseResult.success) {
+      return res
+        .status(400)
+        .json({ message: 'Invalid request data', errors: parseResult.error });
+    }
+
+    const orderData = parseResult.data;
+
+    // Check if the user exists
+    const user = await UserModel.findOne({ userId });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+
+    // Create the order in the database
+    await UserModel.updateOne({ userId }, { $push: { orders: orderData } });
+
+    // Send the successful response
+    return res.status(201).json({
+      success: true,
+      message: 'Order created successfully!',
+      data: null,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Server error', error });
+  }
+};
+
+// Get all orders for a user
+const getAllOrders = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+
+    // Find the user by userId
+    const user = await UserModel.findOne({ userId }, 'orders');
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+
+    // If the user is found but has no orders
+    if (user?.orders?.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'No orders found for this user',
+        error: {
+          code: 404,
+          description: 'No orders found!',
+        },
+      });
+    }
+
+    // Send back the user's orders
+    return res.status(200).json({
+      success: true,
+      message: 'Orders fetched successfully',
+      data: user.orders,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: {
+        code: 500,
+        description: error || 'Internal Server Error',
+      },
+    });
+  }
+};
+
+// Get the total price of all orders for a user
+const getTotalOrderAmount = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+
+    const result = await UserModel.aggregate([
+      { $match: { userId } },
+      { $unwind: '$orders' },
+      {
+        $group: {
+          _id: '$userId',
+          totalPrice: {
+            $sum: { $multiply: ['$orders.price', '$orders.quantity'] },
+          },
+        },
+      },
+    ]);
+
+    if (result.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found or no orders for this user',
+        error: {
+          code: 404,
+          description: 'User not found or no orders',
+        },
+      });
+    }
+
+    const { totalPrice } = result[0];
+
+    return res.status(200).json({
+      success: true,
+      message: 'Total price calculated successfully!',
+      data: {
+        totalPrice,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: {
+        code: 500,
+        description: error || 'Internal Server Error',
+      },
+    });
+  }
+};
+
 export const userController = {
   createUser,
   getSingleUser,
   getAllUsers,
   updateUser,
   deleteUser,
+  createOrder,
+  getAllOrders,
+  getTotalOrderAmount,
 };

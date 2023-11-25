@@ -18,17 +18,16 @@ router.delete('/users/:userId', userController.deleteUser);
 // Endpoint to retrieve a list of all users
 router.get('/users', userController.getAllUsers);
 
-// // Order management endpoints
-// // Endpoint to create a new order
-// router.put('/users/:userId/orders', userController.createOrder);
+// Endpoint to create a new order
+router.put('/users/:userId/orders', userController.createOrder);
 
-// // Endpoint to retrieve all orders for a user
-// router.get('/users/:userId/orders', userController.getAllOrders);
+// Endpoint to retrieve all orders for a user
+router.get('/users/:userId/orders', userController.getAllOrders);
 
-// // Endpoint to calculate the total price of all orders for a user
-// router.get(
-//   '/users/:userId/orders/total-price',
-//   userController.getTotalOrderAmount,
-// );
+// Endpoint to calculate the total price of all orders for a user
+router.get(
+  '/users/:userId/orders/total-price',
+  userController.getTotalOrderAmount,
+);
 
 export const UserRoutes = router;
