@@ -24,3 +24,9 @@ This is a simple CRUD application that allows the user to create, read, update, 
 2. Run `npm install` to install dependencies
 3. Update the `MONGO_CONN` & `PORT` in the `.env` file to point to your MongoDB database
 4. Run `npm run start:dev` to start the application
+
+## Usage
+
+Routes and their descriptions with demo data can be found in the Apollo readme file. Click the link below to view the readme file.
+
+[Apollo Readme](https://github.com/Apollo-Level2-Web-Dev/L2-B2-assignment-2/blob/main/README.md)
