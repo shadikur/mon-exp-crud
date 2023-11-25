@@ -9,13 +9,13 @@ router.post('/users', userController.createUser);
 // // Endpoint to retrieve a specific user by ID
 router.get('/users/:userId', userController.getSingleUser);
 
-// // Endpoint to update a user by ID
-// router.put('/users/:userId', userController.updateUser);
+// Endpoint to update a user by ID
+router.put('/users/:userId', userController.updateUser);
 
-// // Endpoint to delete a user by ID
-// router.delete('/users/:userId', userController.deleteUser);
+// Endpoint to delete a user by ID
+router.delete('/users/:userId', userController.deleteUser);
 
-// // Endpoint to retrieve a list of all users
+// Endpoint to retrieve a list of all users
 router.get('/users', userController.getAllUsers);
 
 // // Order management endpoints

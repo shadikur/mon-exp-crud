@@ -135,8 +135,98 @@ const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
+// Update a user by ID
+const updateUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+
+    // Validate the request body
+    const parseResult = UserSchema.safeParse(req.body);
+    if (!parseResult.success) {
+      return res
+        .status(400)
+        .json({ message: 'Invalid request data', errors: parseResult.error });
+    }
+
+    const userData = parseResult.data;
+
+    // Check if the user exists
+    const user = await UserModel.findOne({ userId });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+
+    // Update the user in the database
+    await UserModel.updateOne({ userId }, userData);
+
+    // Send the successful response
+    return res.status(200).json({
+      success: true,
+      message: 'User updated successfully!',
+      data: userData,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: {
+        code: 500,
+        description: error || 'Internal Server Error',
+      },
+    });
+  }
+};
+
+// Delete a user by ID
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+
+    // Check if the user exists
+    const user = await UserModel.findOne({ userId });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+
+    // Delete the user from the database
+    await UserModel.deleteOne({ userId });
+
+    // Send a success response
+    return res.status(200).json({
+      success: true,
+      message: 'User deleted successfully',
+      data: null,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: {
+        code: 500,
+        description: error || 'Internal Server Error',
+      },
+    });
+  }
+};
+
 export const userController = {
   createUser,
   getSingleUser,
   getAllUsers,
+  updateUser,
+  deleteUser,
 };
