@@ -29,7 +29,6 @@ export const UserSchema = z.object({
   hobbies: z.array(z.string()),
   address: AddressSchema,
   orders: z.array(OrderSchema),
-  gender: z.enum(['Male', 'Female', 'Other']),
 });
 
 export default UserSchema;

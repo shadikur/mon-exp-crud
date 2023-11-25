@@ -19,7 +19,7 @@ const orderSchema = new Schema<Order>({
 });
 
 const userSchema = new Schema<User>({
-  userId: { type: Number, required: true },
+  userId: { type: Number, required: true, unique: true },
   username: { type: String, required: true },
   password: { type: String, required: true },
   fullName: { type: fullNameSchema, required: true },
@@ -29,7 +29,6 @@ const userSchema = new Schema<User>({
   hobbies: [{ type: String }],
   address: { type: addressSchema, required: true },
   orders: [{ type: orderSchema }],
-  gender: { type: String, enum: ['Male', 'Female', 'Other'], required: true },
 });
 
 export const UserModel = mongoose.model<User>('User', userSchema);

@@ -11,7 +11,6 @@ export interface User {
   hobbies: string[];
   address: Address;
   orders: Order[];
-  gender: 'Male' | 'Female' | 'Other';
 }
 
 export interface FullName {
