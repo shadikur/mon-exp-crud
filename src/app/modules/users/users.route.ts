@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/users', userController.createUser);
 
 // // Endpoint to retrieve a specific user by ID
-// router.get('/users/:userId', userController.getSingleUser);
+router.get('/users/:userId', userController.getSingleUser);
 
 // // Endpoint to update a user by ID
 // router.put('/users/:userId', userController.updateUser);
@@ -16,7 +16,7 @@ router.post('/users', userController.createUser);
 // router.delete('/users/:userId', userController.deleteUser);
 
 // // Endpoint to retrieve a list of all users
-// router.get('/users', userController.getAllUsers);
+router.get('/users', userController.getAllUsers);
 
 // // Order management endpoints
 // // Endpoint to create a new order
