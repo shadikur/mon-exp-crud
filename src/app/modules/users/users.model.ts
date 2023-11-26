@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import bcrypt from 'bcrypt';
 import { User, FullName, Address, Order } from './users.interface';
 
 const fullNameSchema = new Schema<FullName>({
@@ -19,7 +20,12 @@ const orderSchema = new Schema<Order>({
 });
 
 const userSchema = new Schema<User>({
-  userId: { type: Number, required: true, unique: true },
+  userId: {
+    type: Number,
+    required: true,
+    unique: true,
+    message: 'User ID already exist!',
+  },
   username: { type: String, required: true },
   password: { type: String, required: true },
   fullName: { type: fullNameSchema, required: true },
@@ -29,6 +35,15 @@ const userSchema = new Schema<User>({
   hobbies: [{ type: String }],
   address: { type: addressSchema, required: true },
   orders: [{ type: orderSchema }],
+});
+
+// hash the password before saving the user
+userSchema.pre('save', async function (next) {
+  const user = this as User & mongoose.Document;
+  if (user.isModified('password')) {
+    user.password = await bcrypt.hash(user.password, 8);
+  }
+  next();
 });
 
 export const UserModel = mongoose.model<User>('User', userSchema);
