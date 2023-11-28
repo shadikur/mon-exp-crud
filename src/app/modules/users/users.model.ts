@@ -1,6 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 import { User, FullName, Address, Order } from './users.interface';
+import config from '../../config';
 
 const fullNameSchema = new Schema<FullName>({
   firstName: { type: String, required: true },
@@ -41,7 +42,7 @@ const userSchema = new Schema<User>({
 userSchema.pre('save', async function (next) {
   const user = this as User & mongoose.Document;
   if (user.isModified('password')) {
-    user.password = await bcrypt.hash(user.password, 8);
+    user.password = await bcrypt.hash(user.password, config.brcypt_salt);
   }
   next();
 });
