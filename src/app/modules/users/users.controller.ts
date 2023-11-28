@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { OrderSchema, UserSchema } from './users.zod';
 import { UserModel } from './users.model';
+import { UserServices } from './users.services';
 
 // Create a new user
 const createUser = async (req: Request, res: Response) => {
@@ -14,6 +15,18 @@ const createUser = async (req: Request, res: Response) => {
     }
 
     const userData = parseResult.data;
+
+    // Check if the user already exists
+    if (await UserServices.checkExistingUser(userData.userId)) {
+      return res.status(409).json({
+        success: false,
+        message: 'User already exists',
+        error: {
+          code: 409,
+          description: 'User already exists!',
+        },
+      });
+    }
 
     // Create the user in the database
     const user = new UserModel(userData);
@@ -49,16 +62,7 @@ const getSingleUser = async (req: Request, res: Response) => {
 
     const user = await UserModel.findOne(
       { userId },
-      {
-        userId: 1,
-        username: 1,
-        fullName: 1,
-        age: 1,
-        email: 1,
-        isActive: 1,
-        hobbies: 1,
-        address: 1,
-      },
+      { password: 0, __v: 0, orders: 0 },
     );
     // If the user is not found, return a 404
     if (!user) {
@@ -138,7 +142,7 @@ const getAllUsers = async (req: Request, res: Response) => {
 // Update a user by ID
 const updateUser = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;
+    const userId = parseInt(req.params.userId);
 
     // Validate the request body
     const parseResult = UserSchema.safeParse(req.body);
@@ -151,8 +155,7 @@ const updateUser = async (req: Request, res: Response) => {
     const userData = parseResult.data;
 
     // Check if the user exists
-    const user = await UserModel.findOne({ userId });
-    if (!user) {
+    if (!(await UserServices.checkExistingUser(userId))) {
       return res.status(404).json({
         success: false,
         message: 'User not found',
@@ -187,11 +190,10 @@ const updateUser = async (req: Request, res: Response) => {
 // Delete a user by ID
 const deleteUser = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;
+    const userId = parseInt(req.params.userId);
 
     // Check if the user exists
-    const user = await UserModel.findOne({ userId });
-    if (!user) {
+    if (!(await UserServices.checkExistingUser(userId))) {
       return res.status(404).json({
         success: false,
         message: 'User not found',
@@ -226,7 +228,7 @@ const deleteUser = async (req: Request, res: Response) => {
 //  Create a new order for a user
 const createOrder = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;
+    const userId = parseInt(req.params.userId);
 
     // Validate the request body
     const parseResult = OrderSchema.safeParse(req.body);
@@ -239,8 +241,7 @@ const createOrder = async (req: Request, res: Response) => {
     const orderData = parseResult.data;
 
     // Check if the user exists
-    const user = await UserModel.findOne({ userId });
-    if (!user) {
+    if (!(await UserServices.checkExistingUser(userId))) {
       return res.status(404).json({
         success: false,
         message: 'User not found',
