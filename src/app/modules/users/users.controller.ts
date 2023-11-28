@@ -29,8 +29,8 @@ const createUser = async (req: Request, res: Response) => {
     }
 
     // Create the user in the database
-    const user = new UserModel(userData);
-    await user.save();
+    const user = await UserServices.createUserOnDB(userData);
+    user.save();
 
     // Prepare the response, omitting the password field
     const response = {
@@ -58,12 +58,9 @@ const createUser = async (req: Request, res: Response) => {
 // Get a single user by ID
 const getSingleUser = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;
+    const userId = parseInt(req.params.userId);
+    const user = await UserServices.getSingleUserFromDB(userId);
 
-    const user = await UserModel.findOne(
-      { userId },
-      { password: 0, __v: 0, orders: 0 },
-    );
     // If the user is not found, return a 404
     if (!user) {
       return res.status(404).json({
@@ -98,17 +95,7 @@ const getSingleUser = async (req: Request, res: Response) => {
 
 const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const users = await UserModel.find(
-      {},
-      {
-        username: 1,
-        fullName: 1,
-        age: 1,
-        email: 1,
-        address: 1,
-      },
-    );
-
+    const users = await UserServices.getAllUsersFromDB();
     // Check if users array is empty
     if (!users || users.length === 0) {
       return res.status(404).json({
@@ -167,7 +154,7 @@ const updateUser = async (req: Request, res: Response) => {
     }
 
     // Update the user in the database
-    await UserModel.updateOne({ userId }, userData);
+    await UserServices.updateUserOnDB(userId, userData);
 
     // Send the successful response
     return res.status(200).json({
@@ -253,7 +240,7 @@ const createOrder = async (req: Request, res: Response) => {
     }
 
     // Create the order in the database
-    await UserModel.updateOne({ userId }, { $push: { orders: orderData } });
+    await UserServices.createOrderOnDB(userId, orderData);
 
     // Send the successful response
     return res.status(201).json({
@@ -269,10 +256,11 @@ const createOrder = async (req: Request, res: Response) => {
 // Get all orders for a user
 const getAllOrders = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;
+    const userId = parseInt(req.params.userId);
 
     // Find the user by userId
-    const user = await UserModel.findOne({ userId }, 'orders');
+    const user = await UserServices.getAllOrdersFromDB(userId);
+
     if (!user) {
       return res.status(404).json({
         success: false,
