@@ -30,7 +30,6 @@ const createUser = async (req: Request, res: Response) => {
 
     // Create the user in the database
     const user = await UserServices.createUserOnDB(userData);
-    user.save();
 
     // Prepare the response, omitting the password field
     const response = {
@@ -51,6 +50,7 @@ const createUser = async (req: Request, res: Response) => {
       data: response,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: 'Server error', error });
   }
 };
