@@ -1,7 +1,9 @@
 // // Check if a user exists by ID (used in the update and delete methods)
 // TODO
 
+import config from '../../config';
 import { UserModel } from './users.model';
+import bcrypt from 'bcrypt';
 
 const checkExistingUser = async (userId: number) => {
   const existingUser = await UserModel.findOne({ userId });
@@ -37,10 +39,14 @@ const getAllUsersFromDB = async () => {
   return users;
 };
 
-const updateUserOnDB = async (userId: number, user: object) => {
+const updateUserOnDB = async (userId: number, user: any) => {
+  if (user?.password) {
+    user.password = await bcrypt.hash(user.password, config.brcypt_salt);
+  }
   const updatedUser = await UserModel.findOneAndUpdate({ userId }, user, {
     new: true,
-  });
+  }).select('-password');
+
   return updatedUser;
 };
 

@@ -2,9 +2,9 @@
 
 ## Base URL
 
-https://mon-exp-crud-aa785e85719a.herokuapp.com/
+https://api.mylab.shadikur.com/
 
-Note: This application is deployed to Heroku and uses MongoDB Atlas for the database. The application may take a few seconds to load if it has not been used in a while.
+Note: This application deplyoed into a docker container and running on a DigitalOcean droplet in the cloud. So, it may take a few seconds to load the application.
 
 ## Description
 

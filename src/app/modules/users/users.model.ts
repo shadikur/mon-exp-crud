@@ -47,4 +47,11 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+userSchema.post('findOneAndUpdate', function (doc, next) {
+  if (doc) {
+    doc.password = undefined;
+  }
+  next();
+});
+
 export const UserModel = mongoose.model<User>('User', userSchema);

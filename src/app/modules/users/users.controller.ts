@@ -154,13 +154,13 @@ const updateUser = async (req: Request, res: Response) => {
     }
 
     // Update the user in the database
-    await UserServices.updateUserOnDB(userId, userData);
+    const updatedUser = await UserServices.updateUserOnDB(userId, userData);
 
     // Send the successful response
     return res.status(200).json({
       success: true,
       message: 'User updated successfully!',
-      data: userData,
+      data: updatedUser,
     });
   } catch (error) {
     return res.status(500).json({
