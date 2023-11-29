@@ -1,6 +1,3 @@
-// // Check if a user exists by ID (used in the update and delete methods)
-// TODO
-
 import config from '../../config';
 import { UserModel } from './users.model';
 import bcrypt from 'bcrypt';
