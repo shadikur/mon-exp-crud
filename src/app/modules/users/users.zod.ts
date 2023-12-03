@@ -28,7 +28,7 @@ export const UserSchema = z.object({
   isActive: z.boolean(),
   hobbies: z.array(z.string()),
   address: AddressSchema,
-  orders: z.array(OrderSchema),
+  orders: z.array(OrderSchema).optional(),
 });
 
 export default UserSchema;
