@@ -12,6 +12,8 @@ This is a simple CRUD application that allows the user to create, read, update, 
 
 ### Routes with examples
 
+# Create a User
+
 --- POST [/api/users](https://api.mylab.shadikur.com/api/users)
 
 ```json
@@ -35,12 +37,17 @@ This is a simple CRUD application that allows the user to create, read, update, 
 }
 ```
 
+# Get All Users
+
 --- GET [/api/users](https://api.mylab.shadikur.com/api/users)
+
+# Get a User
 
 --- GET [/api/users/:id](https://api.mylab.shadikur.com/api/users/21)
 
---- PUT [/api/users/:id](https://api.mylab.shadikur.com/api/users/21)
+# Update a User
 
+--- PUT [/api/users/:id](https://api.mylab.shadikur.com/api/users/21)
 
 ```json
 {
@@ -63,7 +70,29 @@ This is a simple CRUD application that allows the user to create, read, update, 
 }
 ```
 
+# Delete a User
+
 --- DELETE [/api/users/:id](https://api.mylab.shadikur.com/api/users/21)
+
+# Get All Orders for a User
+
+--- GET [/api/users/:id/orders](https://api.mylab.shadikur.com/api/users/9/orders)
+
+# Get Total Price of All Orders for a User
+
+--- GET [/api/users/:id/orders/total-price](https://api.mylab.shadikur.com/api/users/9/orders/total-price)
+
+# Create Order for a User
+
+--- POST [/api/users/:id/orders](https://api.mylab.shadikur.com/api/users/9/orders)
+
+```json
+{
+  "productName": "Test",
+  "price": 14.5,
+  "quantity": 5
+}
+```
 
 ## Technologies Used
 
@@ -86,7 +115,3 @@ This is a simple CRUD application that allows the user to create, read, update, 
 Routes and their descriptions with demo data can be found in the Apollo readme file. Click the link below to view the readme file.
 
 [Apollo Readme](https://github.com/Apollo-Level2-Web-Dev/L2-B2-assignment-2/blob/main/README.md)
-
-```
-
-```
