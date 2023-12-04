@@ -70,7 +70,7 @@ This is a simple CRUD application that allows the user to create, read, update, 
 - Node.js
 - Express
 - Mongoose
-- Heroku
+- Digital Ocean & Docker (Node 18.4.2-Alpine)
 - MongoDB Atlas
 - Bcrypt
 
