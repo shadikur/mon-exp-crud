@@ -1,4 +1,4 @@
-### Mongoose Express CRUD Mastery
+# Mongoose Express CRUD Mastery
 
 ## Base URL
 
@@ -10,9 +10,7 @@ Note: This application deplyoed into a docker container and running on a Digital
 
 This is a simple CRUD application that allows the user to create, read, update, and delete a list of items. The application uses the Mongoose ODM to interact with a MongoDB database.
 
-### Routes with examples
-
-# Create a User
+### Create an User
 
 --- POST [/api/users](https://api.mylab.shadikur.com/api/users)
 
@@ -37,15 +35,15 @@ This is a simple CRUD application that allows the user to create, read, update, 
 }
 ```
 
-# Get All Users
+### Get All Users
 
 --- GET [/api/users](https://api.mylab.shadikur.com/api/users)
 
-# Get a User
+### Get a User
 
 --- GET [/api/users/:id](https://api.mylab.shadikur.com/api/users/21)
 
-# Update a User
+### Update a User
 
 --- PUT [/api/users/:id](https://api.mylab.shadikur.com/api/users/21)
 
@@ -70,19 +68,19 @@ This is a simple CRUD application that allows the user to create, read, update, 
 }
 ```
 
-# Delete a User
+### Delete a User
 
 --- DELETE [/api/users/:id](https://api.mylab.shadikur.com/api/users/21)
 
-# Get All Orders for a User
+### Get All Orders for a User
 
 --- GET [/api/users/:id/orders](https://api.mylab.shadikur.com/api/users/9/orders)
 
-# Get Total Price of All Orders for a User
+### Get Total Price of All Orders for a User
 
 --- GET [/api/users/:id/orders/total-price](https://api.mylab.shadikur.com/api/users/9/orders/total-price)
 
-# Create Order for a User
+### Create Order for a User
 
 --- POST [/api/users/:id/orders](https://api.mylab.shadikur.com/api/users/9/orders)
 
