@@ -16,6 +16,14 @@ const createUser = async (req: Request, res: Response) => {
 
     const userData = parseResult.data;
 
+    // Ensure userId is defined
+    if (userData.userId === undefined) {
+      return res.status(400).json({
+        success: false,
+        message: 'User ID is required',
+      });
+    }
+
     // Check if the user already exists
     if (await UserServices.checkExistingUser(userData.userId)) {
       return res.status(409).json({
