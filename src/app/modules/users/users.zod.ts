@@ -19,15 +19,15 @@ export const OrderSchema = z.object({
 });
 
 export const UserSchema = z.object({
-  userId: z.number(),
-  username: z.string(),
-  password: z.string(),
-  fullName: FullNameSchema,
-  age: z.number(),
-  email: z.string().email(),
-  isActive: z.boolean(),
-  hobbies: z.array(z.string()),
-  address: AddressSchema,
+  userId: z.number().optional(),
+  username: z.string().optional(),
+  password: z.string().optional(),
+  fullName: FullNameSchema.optional(),
+  age: z.number().optional(),
+  email: z.string().email().optional(),
+  isActive: z.boolean().optional(),
+  hobbies: z.array(z.string()).optional(),
+  address: AddressSchema.optional(),
   orders: z.array(OrderSchema).optional(),
 });
 
