@@ -36,8 +36,11 @@ This is a simple CRUD application that allows the user to create, read, update, 
 ```
 
 --- GET [/api/users](https://api.mylab.shadikur.com/api/users)
+
 --- GET [/api/users/:id](https://api.mylab.shadikur.com/api/users/21)
+
 --- PUT [/api/users/:id](https://api.mylab.shadikur.com/api/users/21)
+
 
 ```json
 {
@@ -67,7 +70,7 @@ This is a simple CRUD application that allows the user to create, read, update, 
 - Node.js
 - Express
 - Mongoose
-- Heroku
+- Digital Ocean & Docker (Node 18.4.2-Alpine)
 - MongoDB Atlas
 - Bcrypt
 
