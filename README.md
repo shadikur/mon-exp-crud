@@ -8,7 +8,59 @@ Note: This application deplyoed into a docker container and running on a Digital
 
 ## Description
 
-This is a simple CRUD application that allows the user to create, read, update, and delete a list of items. The application uses the Mongoose ODM to interact with a MongoDB database. The application is deployed to Heroku and uses MongoDB Atlas for the database.
+This is a simple CRUD application that allows the user to create, read, update, and delete a list of items. The application uses the Mongoose ODM to interact with a MongoDB database.
+
+### Routes with examples
+
+--- POST [/api/users](https://api.mylab.shadikur.com/api/users)
+
+```json
+{
+  "userId": 25,
+  "username": "john_doe",
+  "password": "test",
+  "fullName": {
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  "age": 30,
+  "email": "john.doe@example.com",
+  "isActive": true,
+  "hobbies": ["reading", "traveling"],
+  "address": {
+    "street": "123 Main St",
+    "city": "Anytown",
+    "country": "USA"
+  }
+}
+```
+
+--- GET [/api/users](https://api.mylab.shadikur.com/api/users)
+--- GET [/api/users/:id](https://api.mylab.shadikur.com/api/users/21)
+--- PUT [/api/users/:id](https://api.mylab.shadikur.com/api/users/21)
+
+```json
+{
+  "userId": 21,
+  "username": "john_doe",
+  "password": "test",
+  "fullName": {
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  "age": 30,
+  "email": "another@email.com",
+  "isActive": true,
+  "hobbies": ["reading", "traveling"],
+  "address": {
+    "street": "123 Main St",
+    "city": "Anytown",
+    "country": "USA"
+  }
+}
+```
+
+--- DELETE [/api/users/:id](https://api.mylab.shadikur.com/api/users/21)
 
 ## Technologies Used
 
@@ -31,3 +83,7 @@ This is a simple CRUD application that allows the user to create, read, update, 
 Routes and their descriptions with demo data can be found in the Apollo readme file. Click the link below to view the readme file.
 
 [Apollo Readme](https://github.com/Apollo-Level2-Web-Dev/L2-B2-assignment-2/blob/main/README.md)
+
+```
+
+```
